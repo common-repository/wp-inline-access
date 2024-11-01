@@ -1,0 +1,186 @@
+/* Toggle Edit Mode Button
+ ==================================*/
+
+ /*Toggled State*/
+.wpia-toggled #wp-admin-bar-wpia-toggle-edit-mode a {
+	background-color:#2EA2CB;
+	box-shadow: 1px 1px 2px rgba(0,0,0,.4) inset !important;
+}
+
+
+/* Editable Elements
+ ==================================*/
+.wpia-edit-link,
+.wpia-toggled .wpia-is-editable {
+	position: relative;
+	display: block !important;
+	overflow: hidden !important; /* handle floated editable elements */
+}
+.wpia-edit-link-inline,
+.wpia-edit-link-undefined,
+.wpia-edit-link-inline .wpia-is-editable,
+.wpia-edit-link-undefined .wpia-is-editable {
+	display: inline !important;
+}
+.wpia-edit-link-inline-block,
+.wpia-edit-link-undefined,
+.wpia-edit-link-inline-block .wpia-is-editable,
+.wpia-edit-link-undefined .wpia-is-editable {
+	display: inline-block !important;
+}
+
+.wpia-edit-link {
+	padding:0;
+	margin:0;
+	outline: 1px dashed #6ACBC4;
+	outline-offset: -1px; /* try to prevent clipped outlines, no IE support :( */
+	text-decoration: inherit;
+	color: inherit;
+}
+.wpia-toggled .wpia-is-editable * {
+	/*
+	prevent links from being clickable in editable elements
+	a hack that works for now, probably need js eventually
+	*/
+	pointer-events:none;
+}
+.wpia-edit-link:hover {
+	outline: 1px solid #2EA2CB;
+	background: #f0f0b8;
+	cursor: pointer;
+}
+.wpia-edit-link:hover img {
+	opacity:.7;
+}
+
+
+/* The Info Bar 
+ ==================================*/
+.wpia-info-bar {
+	display: none;
+	position:fixed;
+	z-index: 99998; /* Below the admin bar */
+	top: 28px;
+	width: 100%;
+	left: 0;
+	padding: 5px 20px;
+	background: #2EA2CB;
+	font-size: 13px;
+	line-height: 20px;
+	color: #fff;
+}
+.mp6 .wpia-info-bar {
+	top: 32px;
+}
+
+/* hide on mobile for now, mp6 kills of th "Toggle Edit Mode" button on its own */
+@media screen and ( max-width: 782px ) {
+	html .wpia-info-bar {
+		display: none !important;
+	}
+}
+
+.wpia-info-bar a {
+	color: #fff;
+}
+.wpia-info-bar a:hover {
+	color: #fff;
+	text-decoration: none;
+}
+
+.wpia-info-bar dl,
+.wpia-info-bar dt,
+.wpia-info-bar dd {
+	display: inline;
+}
+
+.wpia-info-bar dt:not([data-wpia-tooltip='']),
+.wpia-info-bar dd:not([data-wpia-tooltip='']) {
+	border-bottom: 1px dotted #fff;
+	cursor:help;
+}
+
+.wpia-info-bar dd:before {
+	content:'\003a\0020\0020';
+}
+
+
+.wpia-info-item {
+	display: inline-block; /* make whole dt/dd pairs wrap */
+}
+
+.wpia-info-item:after {
+	display: inline-block;
+	content: '\007c';
+	width: 15px;
+	text-align: center;
+}
+
+.wpia-info-item:last-child:after {
+	display: none;
+}
+
+
+/* Tooltip 
+ ==================================*/
+.wpia-tooltip {
+	position:absolute; /* resolves jumpy tooltip: http://stackoverflow.com/questions/16693302/jqueryui-tooltip-jumps-around */
+	z-index: 99999;
+	display: inline-block;
+	max-width:20rem;
+	padding:5px;
+	font-size:13px;
+	line-height:20px;
+	border: 1px solid #2EA2CB;
+	background-color: #fff;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+}
+
+
+/* Target Styles for Admin
+ ==================================*/
+.widget-top,
+.widget-inside,
+input,
+select,
+#content_ifr,
+.postbox .hndle,
+.postbox .inside {
+	-webkit-transition: background-color 1s .5s, color 1s .5s, border 1s .5s, box-shadow 1s .5s;
+	-ms-transition: background-color 1s .5s, color 1s .5s, border 1s .5s, box-shadow 1s .5s;
+	transition: background-color 1s .5s, color 1s .5s, border 1s .5s, box-shadow 1s .5s;
+}
+
+.wpia-active-widget .widget-top,
+.postbox.wpia-targeted .hndle,
+.wpia-active-widget .in-widget-title {
+	background-color:#2EA2CB !important; /* fighting with mp6. I'll do 10 hail mary's later */
+	color:#fff !important;
+
+	/* Non-mp6 compatibility*/
+	background-image: none;
+	text-shadow: none;
+	margin-top:0;
+}
+.wpia-active-widget .widget-top a:after {
+	color: #fff !important;
+}
+.wpia-active-widget .widget-inside,
+.postbox.wpia-targeted .inside {
+	background-color:#CFE1EF !important;
+}
+
+input.wpia-targeted,
+select.wpia-targeted,
+#content_ifr.wpia-targeted {
+	border: 1px solid #2EA2CB !important;
+	box-shadow: 0 0 4px rgba(0,0,0,.4);
+}
+
+#postimagediv .inside,
+#tagsdiv-post_tag .inside,
+#categorydiv .inside {
+	/* contain floats for targeted styles prettiness */
+	overflow: hidden;
+	margin-top:0;
+}
